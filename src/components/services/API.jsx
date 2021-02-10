@@ -1,0 +1,1 @@
+export const API_GETCUSTOMERS = "https://client.emequisdev.com/api/client";
