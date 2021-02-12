@@ -61,6 +61,7 @@ const useStyles = makeStyles(() => ({
 // Create Table head cells
 
 const headCells = [
+    { id: 'id', numeric: true, label: 'ID' },
     { id: 'name', numeric: false, label: 'Nombre' },
     { id: 'url', numeric: false, label: 'Direccion' },
     { id: 'email', numeric: false, label: 'Contacto' },
@@ -270,6 +271,7 @@ function CustomerTable(props) {
                                     return (
 
                                         <TableRow key={uuid()}>
+                                            <TableCell align='left'>{row.id}</TableCell>
                                             <TableCell align='left'>{row.name}</TableCell>
                                             <TableCell align='left'>{row.url}</TableCell>
                                             <TableCell align='left'>{row.email}</TableCell>

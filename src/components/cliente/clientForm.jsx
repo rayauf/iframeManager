@@ -35,15 +35,13 @@ function CustomerCreateView(props) {
     let history = useHistory();
 
     const handleCreateClient = async (data) => {
-        console.log(data.iframe);
         var iframe = data.iframe.toString()
         var regExWidth = /(width)=["']([^"']*)["']/gi;
         var regExHeight = /(height)=["']([^"']*)["']/gi;
 
         var firstChange = iframe.replace(regExWidth, "width=100%");
         var final = firstChange.replace(regExHeight, "height=100%");
-
-        console.log(final);
+        
         const body = {
             name: data.name,
             url: data.url,

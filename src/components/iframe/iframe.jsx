@@ -12,7 +12,7 @@ class Customer extends Component {
     }
 
     componentDidMount() {
-        Axios.get(API_GETCUSTOMERS + `/31`).then((response) => {
+        Axios.get(API_GETCUSTOMERS + `/30`).then((response) => {
             this.setState({ customers: response.data })
         })
     }

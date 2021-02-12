@@ -37,14 +37,28 @@ export default function CustomerEditView(props) {
 
     let history = useHistory();
 
-    console.log(customer.customerData.name);
+    var meassurements = customer.customerData.iframe;
+
+    var splited = meassurements.split(" ")
+    var width = splited[2].replace("px;", "")
+    var height = splited[4].replace("px;", "")
+
 
     const handleUpdateClient = async (data) => {
+        var iframe = data.iframe.toString()
+        var regExWidth = /(width)=["']([^"']*)["']/gi;
+        var regExHeight = /(height)=["']([^"']*)["']/gi;
+
+        var firstChange = iframe.replace(regExWidth, "width=100%");
+        var final = firstChange.replace(regExHeight, "height=100%");
+
         const body = {
             name: data.name,
             url: data.url,
             email: data.contact,
-            iframe: data.iframe
+            iframe: `<div style="width: ${data.width}px; height: ${data.height}px; display: inline-block">${final}</div>`
+
+
         };
 
         await axios
@@ -128,6 +142,52 @@ export default function CustomerEditView(props) {
                                         rules={{ required: true }}
                                     />
                                 </Grid>
+                                <Grid container item xs={10} alignItems="center" justify="center" spacing={10}>
+                                    <Grid item xs={5} >
+                                        <Controller
+                                            name="width"
+                                            defaultValue={width}
+                                            render={(props) => (
+                                                <TextField
+                                                    label="Ancho px"
+                                                    variant="outlined"
+                                                    value={props.value}
+                                                    onChange={props.onChange}
+                                                    inputRef={props.ref}
+                                                    autoFocus
+                                                    multiline
+                                                    rows={1}
+                                                    fullWidth
+                                                    required
+                                                />
+                                            )}
+                                            control={control}
+                                            rules={{ required: true }}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={5}>
+                                        <Controller
+                                            name="height"
+                                            defaultValue={height}
+                                            render={(props) => (
+                                                <TextField
+                                                    label="Alto px"
+                                                    variant="outlined"
+                                                    value={props.value}
+                                                    onChange={props.onChange}
+                                                    inputRef={props.ref}
+                                                    autoFocus
+                                                    multiline
+                                                    rows={1}
+                                                    fullWidth
+                                                    required
+                                                />
+                                            )}
+                                            control={control}
+                                            rules={{ required: true }}
+                                        />
+                                    </Grid>
+                                </Grid> 
                                 <Grid item xs={8}>
                                     <Controller
                                         name="iframe"
