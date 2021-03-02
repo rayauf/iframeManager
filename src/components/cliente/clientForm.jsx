@@ -40,34 +40,82 @@ function CustomerCreateView(props) {
     const classes = useStyles();
     const { control } = useForm();
     const [columns, setColumns] = React.useState('1');
+
     const handleChange = (event) => {
         setColumns(event.target.value);
     };
 
     let history = useHistory();
 
-    const handleCreateClient = async (data) => {
-        var iframe = data.iframe.toString()
+    const handleIframeData = (data, width, height) =>{
         var regExWidth = /(width)=["']([^"']*)["']/gi;
         var regExHeight = /(height)=["']([^"']*)["']/gi;
 
-        var firstChange = iframe.replace(regExWidth, "width=100%");
+        var firstChange = data.replace(regExWidth, "width=100%");
         var final = firstChange.replace(regExHeight, "height=100%");
+        var finalDiv = `<div style="width: ${width}px; height: ${height}px; display: inline-block">${final}</div>`;
+        console.log();
+        return finalDiv;
+    }
+
+    const handleCreateClient = async (data) => {
+
+        let iframe;
+        
+        if(columns === '1'){
+            const iframeData = handleIframeData(data.iframe.toString(), data.width, data.height);
+            iframe = {
+                    title:data.title,
+                    iframeData:iframeData
+            }
+        }else if(columns === '2'){
+            const iframeData1 = handleIframeData(data.iframe.toString(), data.width, data.height);
+            const iframeData2 = handleIframeData(data.iframe2.toString(), data.width, data.height);
+            const iframe1 = {
+                title: data.title,
+                iframeData:iframeData1
+            }
+            const iframe2 = {
+                title: data.title2,
+                iframeData: iframeData2
+            }
+            iframe = [{iframe1, iframe2}]
+
+        }else if(columns === '3'){
+            const iframeData1 = handleIframeData(data.iframe.toString(), data.width, data.height);
+            const iframeData2 = handleIframeData(data.iframe2.toString(), data.width, data.height);
+            const iframeData3 = handleIframeData(data.iframe3.toString(), data.width, data.height);
+            const iframe1 = {
+                title: data.title,
+                iframeData: iframeData1
+            }
+            const iframe2 = {
+                title: data.title2,
+                iframeData: iframeData2
+            }
+            const iframe3 = {
+                title: data.title3,
+                iframeData: iframeData3
+            }
+            iframe = [{ iframe1, iframe2, iframe3 }]
+
+        }
+        
         
         const body = {
+            company: data.company,
             name: data.name,
             url: data.url,
             email: data.contact,
-            iframe: `<div style="width: ${data.width}px; height: ${data.height}px; display: inline-block">${final}</div>`
-
-            
+            iframe: iframe
         };
+        console.log(body);
 
-        await axios
-            .post(API_GETCUSTOMERS, body)
-            .then((response) => {
-                history.push(`/main`);
-            });
+        // await axios
+        //     .post(API_GETCUSTOMERS, body)
+        //     .then((response) => {
+        //         history.push(`/main`);
+        //     });
     };
 
     return (
@@ -81,6 +129,25 @@ function CustomerCreateView(props) {
                                 Agregar Cliente
                                     </Typography>
                             <Grid container spacing={2} className = {classes.center}>
+                                <Grid item xs={8}>
+                                    <Controller
+                                        name="company"
+                                        defaultValue=""
+                                        render={(props) => (
+                                            <TextField
+                                                label="Compañia"
+                                                variant="outlined"
+                                                value={props.value}
+                                                onChange={props.onChange}
+                                                inputRef={props.ref}
+                                                fullWidth
+                                                required
+                                            />
+                                        )}
+                                        control={control}
+                                        rules={{ required: true }}
+                                    />
+                                </Grid>
                                 <Grid item xs={8}>
                                     <Controller
                                         name="name"

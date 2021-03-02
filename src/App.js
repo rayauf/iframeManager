@@ -34,9 +34,9 @@ function App() {
           <Switch>
             <Route path="/" exact render={() => <Redirect to="/login" />} />
             <Route path="/login" component={LoginBox} />
-            <PrivateRoute path="/main" component={MainView} />
+            <Route path="/main" component={MainView} />
             <Route path="/cliente/crear" component={AddClient} />
-            <PrivateRoute path="/cliente/:id" component={EditClient} />
+            <Route path="/cliente/:id" component={EditClient} />
             <Route path="/iframe" component={Iframe} />
           </Switch>
         </Router>
