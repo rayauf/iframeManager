@@ -10,6 +10,9 @@ import React, { Component } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { API_GETCUSTOMERS } from '../services/API'
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import NativeSelect from '@material-ui/core/NativeSelect';
 
 const useStyles = makeStyles((theme) => ({
     input: {
@@ -19,7 +22,12 @@ const useStyles = makeStyles((theme) => ({
         paddingTop:"5%",
     },
     center:{
-        paddingTop:"8%",
+        paddingTop:"4%",
+        placeContent: "center",
+        height: "100%"
+    },
+    frame:{
+        paddingTop: "1%",
         placeContent: "center",
         height: "100%"
     }
@@ -31,6 +39,10 @@ function CustomerCreateView(props) {
     
     const classes = useStyles();
     const { control } = useForm();
+    const [columns, setColumns] = React.useState('1');
+    const handleChange = (event) => {
+        setColumns(event.target.value);
+    };
 
     let history = useHistory();
 
@@ -131,7 +143,7 @@ function CustomerCreateView(props) {
                                     />
                                 </Grid>   
                                 <Grid container item xs={10 } alignItems="center" justify="center" spacing={10}>
-                                    <Grid item xs={5} >
+                                    <Grid item xs={3} >
                                         <Controller
                                             name="width"
                                             defaultValue=""
@@ -153,7 +165,7 @@ function CustomerCreateView(props) {
                                             rules={{ required: true }}
                                         />
                                     </Grid>
-                                    <Grid item xs={5}>
+                                    <Grid item xs={3}>
                                         <Controller
                                             name="height"
                                             defaultValue=""
@@ -175,29 +187,172 @@ function CustomerCreateView(props) {
                                             rules={{ required: true }}
                                         />
                                     </Grid>
+                                    <Grid item xs={3}>
+                                        <FormControl className={classes.formControl} fullWidth>
+                                            <InputLabel htmlFor="uncontrolled-native">Columnas</InputLabel>
+                                            <NativeSelect
+                                                defaultValue={1}
+                                                onChange={handleChange}
+                                                value={columns}
+                                            >
+                                                <option value={1}>1</option>
+                                                <option value={2}>2</option>
+                                                <option value={3}>3</option>
+                                            </NativeSelect>
+                                        </FormControl>
+                                    </Grid>
                                 </Grid> 
-                                <Grid item xs={8}>
-                                    <Controller
-                                        name="iframe"
-                                        defaultValue=""
-                                        render={(props) => (
-                                            <TextField
-                                                label="Iframe"
-                                                variant="outlined"
-                                                value={props.value}
-                                                onChange={props.onChange}
-                                                inputRef={props.ref}
-                                                autoFocus
-                                                multiline
-                                                rows={6}
-                                                fullWidth
-                                                required
+                                {
+                                    (columns === '1' || columns === '2' || columns === '3') && 
+                                    
+                                    <Grid container spacing={2} className={classes.frame}>
+                                        
+                                        <Grid item xs={8}>
+                                            <Controller
+                                                name="title"
+                                                defaultValue=""
+                                                render={(props) => (
+                                                    <TextField
+                                                        label="Titulo 1"
+                                                        variant="outlined"
+                                                        value={props.value}
+                                                        onChange={props.onChange}
+                                                        inputRef={props.ref}
+                                                        autoFocus
+                                                        multiline
+                                                        rows={1}
+                                                        fullWidth
+                                                        required
+                                                    />
+                                                )}
+                                                control={control}
+                                                rules={{ required: true }}
                                             />
-                                        )}
-                                        control={control}
-                                        rules={{ required: true }}
-                                    />
-                                </Grid>                                
+                                        </Grid> 
+                                    <Grid item xs={8}>
+                                        <Controller
+                                            name="iframe"
+                                            defaultValue=""
+                                            render={(props) => (
+                                                <TextField
+                                                    label="Iframe 1"
+                                                    variant="outlined"
+                                                    value={props.value}
+                                                    onChange={props.onChange}
+                                                    inputRef={props.ref}
+                                                    autoFocus
+                                                    multiline
+                                                    rows={6}
+                                                    fullWidth
+                                                    required
+                                                />
+                                            )}
+                                            control={control}
+                                            rules={{ required: true }}
+                                        />
+                                    </Grid>
+                                    </Grid>
+                                }
+                                {(columns === '2' || columns === '3') &&
+
+                                    <Grid container spacing={2} className={classes.frame}>
+
+                                    <Grid item xs={8}>
+                                        <Controller
+                                            name="title2"
+                                            defaultValue=""
+                                            render={(props) => (
+                                                <TextField
+                                                    label="Titulo 2"
+                                                    variant="outlined"
+                                                    value={props.value}
+                                                    onChange={props.onChange}
+                                                    inputRef={props.ref}
+                                                    autoFocus
+                                                    multiline
+                                                    rows={1}
+                                                    fullWidth
+                                                    required
+                                                />
+                                            )}
+                                            control={control}
+                                            rules={{ required: true }}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={8}>
+                                        <Controller
+                                            name="iframe2"
+                                            defaultValue=""
+                                            render={(props) => (
+                                                <TextField
+                                                    label="Iframe 2"
+                                                    variant="outlined"
+                                                    value={props.value}
+                                                    onChange={props.onChange}
+                                                    inputRef={props.ref}
+                                                    autoFocus
+                                                    multiline
+                                                    rows={6}
+                                                    fullWidth
+                                                    required
+                                                />
+                                            )}
+                                            control={control}
+                                            rules={{ required: true }}
+                                        />
+                                    </Grid>
+                                </Grid>
+                                }
+                                {columns === '3' &&
+
+                                    <Grid container spacing={2} className={classes.frame}>
+
+                                        <Grid item xs={8}>
+                                            <Controller
+                                                name="title3"
+                                                defaultValue=""
+                                                render={(props) => (
+                                                    <TextField
+                                                        label="Titulo 3"
+                                                        variant="outlined"
+                                                        value={props.value}
+                                                        onChange={props.onChange}
+                                                        inputRef={props.ref}
+                                                        autoFocus
+                                                        multiline
+                                                        rows={1}
+                                                        fullWidth
+                                                        required
+                                                    />
+                                                )}
+                                                control={control}
+                                                rules={{ required: true }}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={8}>
+                                            <Controller
+                                                name="iframe3"
+                                                defaultValue=""
+                                                render={(props) => (
+                                                    <TextField
+                                                        label="Iframe 3"
+                                                        variant="outlined"
+                                                        value={props.value}
+                                                        onChange={props.onChange}
+                                                        inputRef={props.ref}
+                                                        autoFocus
+                                                        multiline
+                                                        rows={6}
+                                                        fullWidth
+                                                        required
+                                                    />
+                                                )}
+                                                control={control}
+                                                rules={{ required: true }}
+                                            />
+                                        </Grid>
+                                    </Grid>
+                                }                             
                                 <Grid item xs={5}>
                                     <Button
                                         onClick={() => handleCreateClient(control.getValues())}
