@@ -62,12 +62,11 @@ const useStyles = makeStyles(() => ({
 
 const headCells = [
     { id: 'id', numeric: true, label: 'ID' },
+    { id: 'company', numeric: false, label: 'Compañia' },
     { id: 'name', numeric: false, label: 'Nombre' },
-    { id: 'url', numeric: false, label: 'Direccion' },
     { id: 'email', numeric: false, label: 'Contacto' },
     { id: 'creationDate', numeric: false, label: 'Creado' },
     { id: 'updateDate', numeric: false, label: 'Editado' }
-
 ]
 
 //Create tableRows for TableBody
@@ -85,7 +84,8 @@ function createRows(customers) {
             creationDate: dateFormat(customer.created_at),
             updateDate: dateFormat(customer.updated_at),
             iframe: customer.iframe,
-            frames: customer.frames
+            frames: customer.frames,
+            company: customer.company
         }
         
     })
@@ -273,8 +273,8 @@ function CustomerTable(props) {
 
                                         <TableRow key={uuid()}>
                                             <TableCell align='left'>{row.id}</TableCell>
+                                            <TableCell align='left'>{row.company}</TableCell>
                                             <TableCell align='left'>{row.name}</TableCell>
-                                            <TableCell align='left'>{row.url}</TableCell>
                                             <TableCell align='left'>{row.email}</TableCell>
                                             <TableCell align='left'>{row.creationDate}</TableCell>
                                             <TableCell align='left'>{row.updateDate}</TableCell>

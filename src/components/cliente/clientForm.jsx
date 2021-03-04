@@ -6,13 +6,14 @@ import {
     TextField,
 } from "@material-ui/core";
 import axios from "axios";
-import React, { Component, useEffect } from "react";
+import React, { Component} from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { API_GETCUSTOMERS } from '../services/API'
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import NativeSelect from '@material-ui/core/NativeSelect';
+import ScriptDialog from './dialog'
 
 const useStyles = makeStyles((theme) => ({
     input: {
@@ -41,6 +42,8 @@ function CustomerCreateView(props) {
     const { control } = useForm();
     const [columns, setColumns] = React.useState('1');
     const [orientation, setOrientation] = React.useState('H');
+    const [isDialogOpened, setIsDialogOpened] = React.useState(false);
+    const [clientID, setClientID] = React.useState('');
     const [frames, setFrames] = React.useState([{
         titleLabel: `Title 1`,
         titleRef: `title1`,
@@ -180,7 +183,9 @@ function CustomerCreateView(props) {
             .post(API_GETCUSTOMERS, body)
             .then((response) => {
                 console.log(response);
-                history.push(`/main`);
+                setClientID(response.data.id);
+                setIsDialogOpened(true);
+                //history.push(`/main`);
             });
     };
 
@@ -410,6 +415,12 @@ function CustomerCreateView(props) {
                                     >
                                         Crear
                                     </Button>
+                                    <ScriptDialog openPopup={isDialogOpened}
+                                        setOpenPopup={setIsDialogOpened}
+                                        id={clientID}
+                                    >
+                                        
+                                    </ScriptDialog>
                                 </Grid>
                             </Grid>
                         </div>
