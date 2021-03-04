@@ -85,6 +85,7 @@ function createRows(customers) {
             creationDate: dateFormat(customer.created_at),
             updateDate: dateFormat(customer.updated_at),
             iframe: customer.iframe,
+            frames: customer.frames
         }
         
     })

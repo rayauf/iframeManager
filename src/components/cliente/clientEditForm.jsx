@@ -5,7 +5,8 @@ import CustomerEditView from './editForm'
 class CustomerEdit extends Component {
     render() {
         return <CustomerEditView 
-            customerData = {this.props.location.state.customerData}/>
+            customerData = {this.props.location.state.customerData}
+            />
     }
 }
     

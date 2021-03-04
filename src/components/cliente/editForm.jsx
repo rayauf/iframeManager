@@ -33,7 +33,7 @@ export default function CustomerEditView(props) {
     const classes = useStyles();
     const { control } = useForm();
     const customer = props;
-
+    console.log(props);
 
     let history = useHistory();
 
@@ -59,7 +59,7 @@ export default function CustomerEditView(props) {
             iframe: `<div style="width: ${data.width}px; height: ${data.height}px; display: inline-block">${final}</div>`
 
 
-        };
+    };
 
         await axios
             .put(API_GETCUSTOMERS + `/${customer.customerData.id}`, body)

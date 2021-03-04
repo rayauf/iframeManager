@@ -11,15 +11,17 @@ class Customer extends Component {
         customers: []
     }
 
+
     componentDidMount() {
-        Axios.get(API_GETCUSTOMERS + `/30`).then((response) => {
+        Axios.get(API_GETCUSTOMERS + `/1`).then((response) => {
             this.setState({ customers: response.data })
         })
     }
     render() {
-        return <div dangerouslySetInnerHTML={{ __html: this.state.customers.iframe}}>
+        console.log(this.state.customers.iframe);
+        return <div dangerouslySetInnerHTML={{ __html: this.state.customers.iframe }}>
         </div>
     }
-}
+} //this.state.customers.iframe
 
 export default Customer;
